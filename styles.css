@@ -528,6 +528,77 @@ nav a {
     margin-right: 5px;
 }
 
+/* Custom Unreal icon */
+.fa-unreal {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    background-color: currentColor;
+    -webkit-mask: url("Assets/icon/unreal.svg") no-repeat center / contain;
+    mask: url("Assets/icon/unreal.svg") no-repeat center / contain;
+}
+
+.hover-photo {
+    width: 100%;
+    max-width: 760px;
+    height: auto;
+    display: block;
+    margin: 0.75rem auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    object-fit: cover;
+    transition: transform 220ms ease, filter 220ms ease;
+}
+
+.hover-photo:hover {
+    transform: translateY(-6px) scale(1.02);
+    filter: brightness(1.04) saturate(1.06);
+}
+
+.ep-card {
+    background: var(--surface, #0f1720);
+    color: var(--text, #fff);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+.ep-card h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ep-card h3 i {
+    opacity: 0.9;
+}
+.ep-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.ep-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.ep-dot {
+    width: 8px;
+    height: 8px;
+    background: #7dd3fc;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 /* mobile version */
 
 @media only screen and (max-width: 768px) {
