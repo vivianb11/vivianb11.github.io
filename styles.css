@@ -14,6 +14,8 @@ html body {
     --background-color: rgba(30, 30, 30, 1);
     --text-color: rgba(255, 255, 255, 1);
     --muted-text-color: rgb(210, 210, 210);
+    --wip-border-color: rgb(255, 149, 1);
+    --wip-bg-color: rgba(75, 75, 75, 0.9);
 }
 
 [data-theme="light"] {
@@ -23,6 +25,8 @@ html body {
     --background-color: rgba(255, 255, 255, 1);
     --text-color: rgba(0, 0, 0, 1);
     --muted-text-color: rgb(60, 60, 60);
+    --wip-border-color: rgba(0, 122, 255, 1);
+    --wip-bg-color: rgba(240, 240, 240, 1);
 }
 
 img {
@@ -207,6 +211,26 @@ video {
     margin: auto;
 }
 
+.wip-box {
+    background-color: var(--wip-bg-color);
+    border: 1px solid var(--wip-border-color);
+    border-left: 5px solid var(--wip-border-color);
+    color: var(--text-color);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-family: sans-serif;
+}
+
+.wip-box p {
+    margin: 5px 0;
+    color: var(--muted-text-color);
+}
+
+.wip-box strong {
+    color: var(--text-color);
+}
+
 .card-deck {
     display: flex;
     justify-content: center;
@@ -235,7 +259,9 @@ video {
 
     /* Annimation */
     opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transition:
+        transform 0.5s ease-in-out,
+        opacity 0.5s ease-in-out;
 
     /* color: #fff; */
 
@@ -428,7 +454,7 @@ h1 {
     font-weight: bold;
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 h3 {
@@ -549,7 +575,9 @@ nav a {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.06);
     object-fit: cover;
-    transition: transform 220ms ease, filter 220ms ease;
+    transition:
+        transform 220ms ease,
+        filter 220ms ease;
 }
 
 .hover-photo:hover {
