@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
@@ -17,11 +17,31 @@
     </head>
 
     <body>
-        <div w3-include-html="Project_Pages/Header.html"></div>
+        <div w3-include-html="Project_Pages/Atoms/Header.html"></div>
 
         <section id="projects">
             <h1>Projects</h1>
             <div class="grid">
+                <div class="item" ProjectTag="2024">
+                    <img src="Assets/Img/Shards/ShardsPoster.png" />
+                    <!-- <video src="Or a video" muted autoplay loop></video> -->
+                    <h2>Shards</h2>
+                    <p>
+                        Shards is a single-player twin-stick shooter adventure
+                        game where you play as a clay robot. Fight your own
+                        kind, advance deeper into the Citadel and uncover its
+                        secrets.
+                    </p>
+                    <div class="Button Grid">
+                        <a href="Project_Pages/Shards.html" class="button">
+                            <span>
+                                Try It Out
+                                <i class="fa-regular fa-lightbulb fa_2xl"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
                 <div class="item" ProjectTag="2025">
                     <img
                         src="Assets/Img/EyePiece/Tempo Office Game Title.png"
@@ -296,7 +316,7 @@
             </div>
         </section>
 
-        <footer w3-include-html="Project_Pages/Footer.html"></footer>
+        <footer w3-include-html="Project_Pages/Atoms/Footer.html"></footer>
 
         <script src="Scripts/script.js"></script>
     </body>
