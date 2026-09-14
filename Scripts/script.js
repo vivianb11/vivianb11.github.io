@@ -72,21 +72,31 @@ document.addEventListener("DOMContentLoaded", function () {
 //#endregion
 
 //#region Video Manager
-const videos = document.querySelectorAll("video");
+const videos = document.querySelectorAll("video[data-src], video[src]");
 
 if (videos.length > 0) {
     const options = {
         root: null,
-        rootMargin: "0px",
+        rootMargin: "200px",
         threshold: 0.5, // Play video when 50% of it is visible
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
+            const video = entry.target;
+
             if (entry.isIntersecting) {
-                entry.target.play();
+                if (video.dataset.src && !video.src) {
+                    video.src = video.dataset.src;
+                    video.load();
+                    video.removeAttribute("data-src");
+                }
+
+                video.play().catch(() => {
+                    // Playback can be blocked when the browser's autoplay policy changes.
+                });
             } else {
-                entry.target.pause();
+                video.pause();
             }
         });
     }, options);
