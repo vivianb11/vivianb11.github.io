@@ -1,34 +1,32 @@
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        /*search for elements with a certain atrribute:*/
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-            /* Make an HTTP request using the attribute value as the file name: */
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {
-                        elmnt.innerHTML = this.responseText;
-                    }
-                    if (this.status == 404) {
-                        elmnt.innerHTML = "Page not found.";
-                    }
-                    /* Remove the attribute, and call this function once more: */
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
+async function includeHTML() {
+    const elements = document.querySelectorAll("[w3-include-html]");
+
+    await Promise.all(
+        Array.from(elements).map(async (element) => {
+            const file = element.getAttribute("w3-include-html");
+
+            if (!file) {
+                return;
+            }
+
+            try {
+                const response = await fetch(file);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
                 }
-            };
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            /* Exit the function: */
-            return;
-        }
-    }
+
+                element.innerHTML = await response.text();
+            } catch (error) {
+                console.error(`Could not load included HTML "${file}".`, error);
+                element.textContent = "Page not found.";
+            } finally {
+                element.removeAttribute("w3-include-html");
+            }
+        }),
+    );
+
     window.scrollTo(0, 0);
 }
 
-addEventListener("DOMContentLoaded", includeHTML);
+document.addEventListener("DOMContentLoaded", includeHTML);
