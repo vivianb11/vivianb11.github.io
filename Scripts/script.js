@@ -1,14 +1,12 @@
 //#region MailCopy Handler
 
-function SetTextToClipboard(text) {
+function copyEmail(event, email) {
+    if (!navigator.clipboard) return; // laisse le mailto: s'ouvrir normalement
+    event.preventDefault();
     navigator.clipboard
-        .writeText(text)
-        .then(() => {
-            console.log("Text copied successfully!");
-        })
-        .catch((err) => {
-            console.error("Could not copy text: ", err);
-        });
+        .writeText(email)
+        .then(TimedPopup)
+        .catch(() => (window.location.href = "mailto:" + email));
 }
 
 function TimedPopup() {
