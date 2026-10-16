@@ -1,5 +1,6 @@
-.vs
-.psd
-.zip
+.vs/
+*.psd
+*.zip
+OutOfDate.txt
 Thumbs.db
 desktop.ini
