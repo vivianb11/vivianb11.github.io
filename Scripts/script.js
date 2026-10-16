@@ -161,8 +161,7 @@ function animateProjects(searchTags) {
     const projects = document.querySelectorAll(".item");
 
     projects.forEach((project) => {
-        const projectTags = project
-            .getAttribute("ProjectTag")
+        const projectTags = project.project.dataset.tags
             .split(",")
             .map((tag) => tag.trim());
         // Check if any of the project's tags match any of the search tags
