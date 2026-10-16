@@ -71,6 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //#region Video Manager
 const videos = document.querySelectorAll("video[data-src], video[src]");
+const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+).matches;
 
 if (videos.length > 0) {
     const options = {
@@ -90,9 +93,7 @@ if (videos.length > 0) {
                     video.removeAttribute("data-src");
                 }
 
-                video.play().catch(() => {
-                    // Playback can be blocked when the browser's autoplay policy changes.
-                });
+                if (!reduceMotion) video.play().catch(() => {});
             } else {
                 video.pause();
             }
