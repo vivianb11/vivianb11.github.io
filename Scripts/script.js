@@ -106,17 +106,6 @@ if (videos.length > 0) {
 }
 //#endregion
 
-//#region Avoid Opera img problem
-
-// Check if the current browser is Opera
-// Fonction pour supprimer le style OperaUserStyle
-function removeOperaUserStyle() {
-    var operaUserStyle = document.getElementById("operaUserStyle");
-    if (operaUserStyle) {
-        operaUserStyle.parentNode.removeChild(operaUserStyle);
-    }
-}
-
 // Supprimer le style lors du chargement initial de la page
 addEventListener("DOMContentLoaded", removeOperaUserStyle);
 
