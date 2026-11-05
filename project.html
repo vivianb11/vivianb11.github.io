@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Vivian Boudon - Project</title>
+        <link
+            rel="shortcut icon"
+            href="Assets/SVG/Logo.svg"
+            type="image/svg+xml"
+        />
+
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <script src="Scripts/IncludeHTML.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.umd.js"></script>
+    </head>
+    <body>
+        <div w3-include-html="Project_Pages/Atoms/Header.html"></div>
+
+        <!-- Le contenu vient de Project_Pages/<nom>.md (voir Scripts/project-page.js) -->
+        <main id="project-content"></main>
+
+        <footer w3-include-html="Project_Pages/Atoms/Footer.html"></footer>
+
+        <script src="Scripts/project-page.js"></script>
+        <script src="Scripts/script.js" defer></script>
+    </body>
+</html>
