@@ -160,9 +160,10 @@ a {
     box-shadow: 0px 0px 10px #000000;
     padding: 20px;
     /* La carte prend la largeur de sa colonne, sans depasser ~80% de la hauteur
-       de l'ecran (60vh de large * 4/3 = 80vh de haut). La hauteur suit le ratio */
+       de l'ecran (60vh de large * 4/3 = 80vh de haut). La hauteur suit le ratio.
+       Plancher a 340px pour que les fenetres basses ne compriment pas la largeur. */
     box-sizing: border-box;
-    width: min(100%, 60vh);
+    width: min(100%, max(60vh, 340px));
     justify-self: center;
     aspect-ratio: 3/4;
 
@@ -640,7 +641,6 @@ nav a {
     }
 
     header {
-        padding: 5%;
         margin: 2%;
         display: flex;
         gap: auto;
