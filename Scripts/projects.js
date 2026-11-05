@@ -14,7 +14,11 @@
 //   description Texte (le HTML est accepte : <br />, <b>, ...)
 //   page        (optionnel) Page "Learn More" du projet
 //   play        (optionnel) Lien "Try It Out"
-//   playIcon    (optionnel) Icone Font Awesome du bouton "Try It Out"
+//   playIcon    (optionnel) Icone Font Awesome du bouton "Play"
+//   fit         (optionnel) "contain" = image entiere sans recadrage (logos)
+//
+// Clic sur la carte -> page si elle existe, sinon play. Sans les deux, la
+// carte est statique. Le bouton "Play" apparait seulement si play existe.
 
 const PROJECTS = [
     {
@@ -80,6 +84,7 @@ const PROJECTS = [
         tags: ["2023"],
         image: "Assets/Img/SmallProjects/Logo_AMW.png",
         alt: "Amazing World logo",
+        fit: "contain",
         description: `What if ... a Gyro Game <br />+ let's see ... A Planet?
             <br /><br /><b>Wait no more!!! Go try it out</b> 😉`,
         play: "https://vivianb11.itch.io/amazing-world",
@@ -100,6 +105,7 @@ const PROJECTS = [
         tags: ["2023"],
         image: "Assets/Img/SmallProjects/DreamDropStarfight.png",
         alt: "Dream Drop Starfight illustration",
+        fit: "contain",
         description: `A 2-day game jam game with a fun versus mechanic meant to
             be played with friends and family! <br />
             Give it a try and try not to <b>fall off</b>!!!`,
@@ -111,6 +117,7 @@ const PROJECTS = [
         tags: ["2022"],
         image: "Assets/Img/SmallProjects/Sir'sCastle_Ill.png",
         alt: "Sir's Castle illustration",
+        fit: "contain",
         description: `My very first video game made with the Construct 2
             engine! I went from barely knowing anything about how to make a
             video game to this very simple concept.`,
@@ -132,36 +139,57 @@ const PROJECTS = [
 
 //#region Project Grid Builder
 function buildProjectItem(project, index) {
-    const item = document.createElement("div");
-    item.className = "item";
+    const item = document.createElement("article");
     item.dataset.tags = project.tags.join(",");
+
+    // Clic sur la carte : page du projet en priorite, sinon le jeu
+    const mainHref = project.page || project.play;
+    const mainIsExternal = !project.page && !!project.play;
+    item.className = `item project-card ${mainHref ? "is-clickable" : "is-static"}`;
 
     // Seule la premiere image se charge tout de suite, les autres en lazy
     const lazy = index === 0 ? "" : 'loading="lazy" decoding="async"';
     const media = project.video
         ? `<video data-src="${project.video}" poster="${project.image}"
-                preload="none" muted loop></video>`
+                preload="none" muted loop playsinline></video>`
         : `<img src="${project.image}" alt="${project.alt}" ${lazy} />`;
+    const fitClass = project.fit === "contain" ? " pc-media--contain" : "";
+    const backdrop =
+        project.fit === "contain"
+            ? `<img class="pc-backdrop" src="${project.image}" alt="" aria-hidden="true" ${lazy} />`
+            : "";
 
-    const buttons = [];
+    const tags = project.tags.map((tag) => `<li>${tag}</li>`).join("");
+
+    const title = mainHref
+        ? `<a class="pc-link" href="${mainHref}"${
+              mainIsExternal ? ' target="_blank" rel="noopener"' : ""
+          }>${project.title}</a>`
+        : project.title;
+
+    const footer = [];
     if (project.page) {
-        buttons.push(`<a href="${project.page}" class="button"><span>
-                Learn More <i class="fa-regular fa-lightbulb fa_2xl"></i>
-            </span></a>`);
+        footer.push(`<span class="pc-cta">View project
+                <i class="fa-solid fa-arrow-right"></i></span>`);
     }
     if (project.play) {
-        const icon = project.playIcon
-            ? `<i class="${project.playIcon} fa_2xl"></i>`
-            : "";
-        buttons.push(`<a href="${project.play}" class="button" target="_blank">
-                <span> Try It Out ${icon}</span></a>`);
+        const icon = project.playIcon || "fa-solid fa-play";
+        const external = project.page
+            ? ""
+            : ' <i class="fa-solid fa-arrow-up-right-from-square pc-ext"></i>';
+        footer.push(`<a class="pc-play" href="${project.play}" target="_blank"
+                rel="noopener" aria-label="Play ${project.title}">
+                <i class="${icon}"></i> Play${external}</a>`);
     }
 
     item.innerHTML = `
-        ${media}
-        <h2>${project.title}</h2>
-        <p>${project.description}</p>
-        <div class="Button Grid">${buttons.join("")}</div>`;
+        <div class="pc-media${fitClass}">${backdrop}${media}</div>
+        <div class="pc-overlay">
+            <ul class="pc-tags">${tags}</ul>
+            <h2>${title}</h2>
+            <div class="pc-reveal"><div><p>${project.description}</p></div></div>
+            ${footer.length ? `<div class="pc-footer">${footer.join("")}</div>` : ""}
+        </div>`;
     return item;
 }
 

@@ -139,7 +139,6 @@ function animateProjects(searchTags) {
                 project.style.display = "none";
             }, 500);
         } else {
-            project.style.transition = "opacity 0.5s ease-in-out";
             project.style.opacity = "1";
         }
     });
