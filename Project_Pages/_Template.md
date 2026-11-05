@@ -6,6 +6,8 @@ year: 2026
 duration: 3 month
 engine: Unity
 platform: PC
+accent: #ffc400
+accent-ink: #1d1500
 ---
 
 <!--
@@ -17,6 +19,9 @@ platform: PC
   EN-TETE (entre les ---) : chaque ligne devient une pastille.
   Enleve une ligne pour cacher la pastille. L'icone de engine/platform
   est choisie toute seule (Unreal, Unity, Godot / PC, VR, Mobile, Web...).
+  accent / accent-ink : couleur du theme de la page (accent-ink = texte
+  pose sur la couleur, sombre si l'accent est clair). Sans accent :
+  couleur du site.
 
   SYNTAXE
   # Titre             -> nouvelle section (grand cadre)

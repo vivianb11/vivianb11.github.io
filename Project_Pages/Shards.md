@@ -6,6 +6,8 @@ year: 2025 - 26
 duration: 8 month
 engine: Unreal Engine 5.5.4
 platform: PC
+accent: #67c8cc
+accent-ink: #062224
 ---
 
 # Shards - Overview
@@ -21,7 +23,7 @@ But don't let the fragile beauty of this world fool you: exploration will someti
 :::
 
 ::: columns
-youtube: REPLACE_WITH_VIDEO_ID | Shards Trailer
+youtube: sM1dqK_42_0 | Shards Trailer
 +++
 "While bodies fail the soul,
 

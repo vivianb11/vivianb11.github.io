@@ -1,0 +1,859 @@
+/* ==========================================================================
+   Project page: bento layout (neutral, shared by every project page).
+   Load after ../styles.css. Everything is scoped under <main class="pf">.
+
+   Theme a project WITHOUT editing this file, in a small per-project
+   stylesheet (or a style="" on <main class="pf">), e.g.:
+       .pf { --pf-accent: #ffc400; --pf-accent-ink: #1d1500; }
+   Only the variables below are meant to change; the accent glow,
+   hovers, dots and counters all derive from --pf-accent.
+   ========================================================================== */
+
+.pf {
+    /* colours */
+    --pf-accent: var(--accent-color, #5b9dff);   /* site accent by default */
+    --pf-accent-ink: #fff;                        /* text/icons drawn ON the accent */
+    --pf-card: rgba(20, 22, 28, 0.72);            /* tile background */
+    --pf-line: rgba(255, 255, 255, 0.08);         /* tile border */
+    --pf-tile-bg: #0b0d12;                        /* behind images */
+    --pf-soft-text: #d6d9e0;                      /* tagline */
+    --pf-title-bg: linear-gradient(135deg, rgba(24, 26, 34, 0.95), rgba(14, 16, 22, 0.95));
+    /* shape */
+    --pf-radius: 14px;
+    --pf-max-width: 1500px;
+    /* evolution slider: pixel size of its images (keeps the frame tight) */
+    --pf-evo-w: 16;
+    --pf-evo-h: 9;
+    max-width: var(--pf-max-width);
+    margin: 0 auto;
+}
+
+/* ---------- shared pieces ---------- */
+.pf-kicker {
+    color: var(--pf-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.pf-title h1 {
+    margin: 0 0 14px;
+    font-size: clamp(34px, 4.5vw, 58px);
+    line-height: 1.05;
+}
+.pf-tagline {
+    font-size: 18px;
+    max-width: 760px;
+    line-height: 1.5;
+}
+.pf-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.pf-video video {
+    width: 100%;
+    max-width: 100%;
+    max-height: none;
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+    background: #000;
+}
+.pf-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+.pf-stat {
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+}
+.pf-stat strong {
+    display: block;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--pf-accent);
+}
+.pf-stat span {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted-text-color, #9aa3b2);
+    font-size: 14px;
+}
+.pf-pitch p {
+    line-height: 1.65;
+    margin-bottom: 12px;
+}
+.pf-lead {
+    text-align: center;
+    margin: -24px auto 30px;
+    max-width: 720px;
+}
+.pf-feature ul {
+    text-align: left;
+    line-height: 1.7;
+    color: var(--muted-text-color, #9aa3b2);
+    padding-left: 22px;
+}
+.pf-feature h3 {
+    padding-left: 0;
+    font-size: 26px;
+    margin: 0 0 10px;
+}
+.pf-feature h3 i {
+    color: var(--pf-accent);
+    margin-right: 6px;
+}
+.pf figure {
+    margin: 0;
+}
+.pf figcaption {
+    text-align: center;
+    color: var(--muted-text-color, #9aa3b2);
+    font-size: 14px;
+    margin-top: 6px;
+}
+.pf .hover-photo {
+    max-width: 100%;
+    margin: 0;
+}
+.pf-team p {
+    text-align: center;
+}
+
+/* ---------- project tags: label / value (scoped: the site-wide .highlight is unchanged) ---------- */
+.pf .pf-chips {
+    gap: 10px;
+}
+.pf .pf-chips .highlight {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 120px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+}
+.pf .pf-chips .highlight small {
+    margin-bottom: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--muted-text-color, #9aa3b2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.pf .pf-chips .highlight small i {
+    margin-right: 6px;
+    color: var(--pf-accent);
+}
+.pf .pf-chips .highlight span {
+    font-size: 15px;
+    color: var(--text-color, #f2f4f8);
+}
+
+/* ---------- Under the hood: shared pieces ---------- */
+.pf-insights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 26px;
+}
+.pf-insight {
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+    padding: 22px 24px;
+    text-align: left;
+}
+.pf-insight i {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    font-size: 18px;
+    color: var(--pf-accent-ink);
+    background: var(--pf-accent);
+}
+.pf-insight h4 {
+    margin: 0 0 6px;
+    font-size: 18px;
+}
+.pf-insight p {
+    line-height: 1.55;
+    font-size: 15px;
+}
+
+/* ---------- overview, gameplay and editor mosaics ---------- */
+.pf .pf-intro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+        "title title title title"
+        "chips chips chips chips"
+        "video video video stats"
+        "pitch pitch pitch pitch";
+    gap: 18px;
+}
+.pf .pf-intro > * {
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+    padding: 22px;
+}
+.pf .pf-title {
+    grid-area: title;
+    display: grid;
+    grid-template-columns: auto minmax(260px, 420px);
+    grid-template-areas:
+        "kicker kicker"
+        "name tagline";
+    align-items: end;
+    column-gap: 48px;
+    padding: 34px 40px;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--pf-accent) 16%, transparent), transparent 55%),
+        var(--pf-title-bg);
+}
+.pf .pf-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: var(--pf-accent);
+}
+.pf .pf-kicker {
+    grid-area: kicker;
+    font-size: 14px;
+}
+.pf .pf-title h1 {
+    grid-area: name;
+    margin: 0;
+    text-align: left;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+.pf .pf-tagline {
+    grid-area: tagline;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--pf-soft-text);
+    padding-left: 22px;
+    border-left: 1px solid var(--pf-line);
+}
+.pf .pf-video {
+    grid-area: video;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background: #000;
+}
+.pf .pf-video video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    border-radius: 0;
+    box-shadow: none;
+}
+.pf .pf-stats {
+    grid-area: stats;
+    grid-template-columns: 1fr;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    gap: 12px;
+}
+.pf .pf-stat {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 12px 8px;
+}
+.pf .pf-stat strong {
+    font-size: 34px;
+}
+.pf .pf-pitch {
+    grid-area: pitch;
+}
+/* tags: one full-width strip of five cells under the title */
+.pf .pf-chips {
+    grid-area: chips;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+.pf .pf-chips .highlight {
+    /* fill the grid cell; the site-wide .highlight is fit-content */
+    width: auto;
+    min-width: 0;
+    white-space: normal;
+    padding: 14px 18px;
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: 12px;
+}
+.pf .pf-chips .highlight span {
+    font-size: 16px;
+}
+/* no orphan tag on a row of its own: 3 + 2 on tablets, 1 + 2 + 2 on phones */
+@media (max-width: 1000px) {
+    .pf .pf-chips {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .pf .pf-chips .highlight {
+        grid-column: span 2;
+    }
+    .pf .pf-chips .highlight:nth-child(n + 4) {
+        grid-column: span 3;
+    }
+}
+@media (max-width: 560px) {
+    .pf .pf-chips {
+        grid-template-columns: 1fr 1fr;
+    }
+    .pf .pf-chips .highlight,
+    .pf .pf-chips .highlight:nth-child(n + 4) {
+        grid-column: auto;
+    }
+    .pf .pf-chips .highlight:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+/* features: three cards */
+.pf .pf-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.pf .pf-feature {
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+    overflow: hidden;
+}
+.pf .pf-feature .hover-photo {
+    border-radius: 0;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    box-shadow: none;
+}
+.pf .pf-feature > div {
+    padding: 20px 22px 8px;
+}
+.pf .pf-feature h3 {
+    font-size: 22px;
+}
+
+/* tiles with captions laid over the image (gameplay + editor) */
+.pf .pf-shots figure,
+.pf .pf-editor-grid figure {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--pf-radius);
+    border: 1px solid var(--pf-line);
+    background: var(--pf-tile-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.pf .pf-shots .hover-photo,
+.pf .pf-editor-grid .hover-photo {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transition: filter 200ms ease;
+}
+/* no zoom on hover: the image stays put, the tile lights up instead */
+.pf .hover-photo:hover,
+.pf figure:hover .hover-photo,
+.pf .pf-feature:hover .hover-photo {
+    transform: none;
+    filter: brightness(1.08);
+}
+.pf .pf-shots figure,
+.pf .pf-editor-grid figure,
+.pf .pf-feature {
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.pf .pf-shots figure:hover,
+.pf .pf-editor-grid figure:hover,
+.pf .pf-feature:hover {
+    border-color: var(--pf-accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--pf-accent);
+}
+.pf .pf-shots figcaption,
+.pf .pf-editor-grid figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 34px 16px 12px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.82));
+    pointer-events: none;
+}
+
+/* gameplay: one hero tile + four smaller shots */
+.pf .pf-shots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+.pf .pf-shots figure {
+    aspect-ratio: 16 / 9;
+}
+.pf .pf-shots .pf-shot-main {
+    grid-column: span 2;
+    grid-row: span 2;
+    aspect-ratio: auto;
+}
+.pf .pf-shots .pf-shot-main figcaption {
+    font-size: 19px;
+    padding: 50px 22px 18px;
+}
+
+/* editor: mosaic. Wide shots are shown whole; the two long Inspector captures show their top
+   with a fade and open in full in the lightbox. */
+.pf .pf-editor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row dense;
+    gap: 16px;
+}
+.pf .pf-editor-grid .hover-photo {
+    object-fit: contain;
+}
+.pf .pf-editor-grid .pf-tall .hover-photo {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: top;
+}
+.pf .pf-editor-grid .pf-tall::after {
+    content: "";
+    position: absolute;
+    inset: 45% 0 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    pointer-events: none;
+}
+.pf .pf-editor-grid .pf-tall figcaption {
+    z-index: 1;
+    background: none;
+}
+.pf .pf-editor-grid .ed-icons .hover-photo {
+    object-position: top;
+}
+
+
+/* editor mosaic: auto-placed 4-column grid. Size tiles with the helpers,
+   or give the page its own grid-template-areas in the project stylesheet. */
+.pf .pf-span-2 { grid-column: span 2; }
+.pf .pf-span-3 { grid-column: span 3; }
+.pf .pf-span-all { grid-column: 1 / -1; }
+.pf .pf-row-2 { grid-row: span 2; }
+
+/* "view full" hint on every zoomable tile */
+.pf [data-zoom] {
+    cursor: zoom-in;
+}
+.pf [data-zoom]::before {
+    content: "View full";
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(10, 12, 18, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+.pf .pf-tall[data-zoom]::before,
+.pf [data-zoom]:hover::before {
+    opacity: 1;
+    transform: none;
+}
+
+/* lightbox */
+.pf-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    /* size the image against this box (cq units), not 100vw which counts the page scrollbar */
+    container-type: size;
+    background: rgba(6, 7, 10, 0.92);
+    backdrop-filter: blur(4px);
+}
+.pf-lightbox.open {
+    display: flex;
+}
+.pf-lightbox-inner {
+    max-width: min(1600px, 100cqw);
+    max-height: calc(100cqh - 30px);
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+/* wide images: fit both dimensions, no scrollbars */
+.pf-lightbox img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: min(1600px, 100cqw);
+    max-height: calc(100cqh - 30px);
+}
+/* tall inspector captures: full width, vertical scroll only */
+.pf-lightbox.tall .pf-lightbox-inner {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.pf-lightbox.tall img {
+    max-height: none;
+}
+.pf-lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(20, 22, 28, 0.9);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+.pf-lightbox-caption {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    text-align: center;
+    color: #ddd;
+    font-size: 15px;
+}
+
+/* evolution: slider with arrows, counter and dots */
+.pf .pf-carousel {
+    position: relative;
+    outline: none;
+    /* hug the evolution images (--pf-evo-w / --pf-evo-h): no letterbox bands */
+    max-width: min(100%, calc(70vh * var(--pf-evo-w) / var(--pf-evo-h)));
+    margin-inline: auto;
+}
+.pf .pf-carousel-viewport {
+    overflow: hidden;
+    border-radius: var(--pf-radius);
+    border: 1px solid var(--pf-line);
+    background: var(--pf-tile-bg);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+.pf .pf-evo {
+    display: flex;
+    transition: transform 450ms cubic-bezier(0.22, 0.8, 0.25, 1);
+}
+.pf .pf-evo figure {
+    flex: 0 0 100%;
+    position: relative;
+}
+.pf .pf-evo .hover-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--pf-evo-w) / var(--pf-evo-h);
+    object-fit: cover;
+    background: var(--pf-tile-bg);
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+}
+.pf .pf-evo .hover-photo:hover {
+    transform: none;
+}
+.pf .pf-evo figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 50px 24px 18px;
+    text-align: left;
+    font-size: 19px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+}
+.pf .pf-arrow {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(12, 14, 20, 0.78);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition:
+        background 160ms ease,
+        color 160ms ease,
+        opacity 160ms ease,
+        transform 160ms ease;
+}
+.pf .pf-arrow:hover:not(:disabled) {
+    background: var(--pf-accent);
+    color: var(--pf-accent-ink);
+    transform: scale(1.06);
+}
+.pf .pf-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+.pf .pf-carousel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 18px;
+}
+.pf-count {
+    font-size: 15px;
+    color: var(--muted-text-color, #9aa3b2);
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+}
+.pf-count strong {
+    color: var(--pf-accent);
+    font-size: 20px;
+}
+.pf-dots {
+    display: flex;
+    gap: 8px;
+}
+.pf-dots button {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition:
+        width 250ms ease,
+        background 250ms ease;
+}
+.pf-dots button.on {
+    width: 32px;
+    background: var(--pf-accent);
+}
+
+/* ---------- markdown pages (project.html?p=Name, built by Scripts/project-page.js) ---------- */
+.pf .pf-intro-md {
+    grid-template-areas:
+        "title title title title"
+        "chips chips chips chips"
+        "flow flow flow flow";
+}
+.pf .pf-intro > .pf-flow {
+    grid-area: flow;
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+/* "::: columns" -> side-by-side tiles */
+.pf .pf-cols {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 18px;
+    align-items: stretch;
+}
+.pf .pf-cols + .pf-cols,
+.pf .pf-flow > * + *,
+.pf section > h2 + .pf-cols {
+    margin-top: 18px;
+}
+.pf .pf-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding: 22px 24px;
+    text-align: left;
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.pf .pf-tile > :first-child { margin-top: 0; }
+.pf .pf-tile > :last-child { margin-bottom: 0; }
+.pf .pf-tile p {
+    margin: 0;
+    line-height: 1.6;
+}
+.pf .pf-tile > * + * {
+    margin-top: 0.9em;
+}
+.pf .pf-tile img,
+.pf .pf-tile video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    border-radius: calc(var(--pf-radius) - 4px);
+    box-shadow: none;
+}
+/* a tile holding only an image or a video: the media fills it */
+.pf .pf-tile:has(> p:only-child > img:only-child),
+.pf .pf-tile:has(> video:only-child),
+.pf .pf-tile:has(> figure:only-child) {
+    padding: 0;
+    overflow: hidden;
+    background: var(--pf-tile-bg);
+}
+.pf .pf-tile > p:only-child > img:only-child,
+.pf .pf-tile > video:only-child {
+    border-radius: 0;
+    height: 100%;
+    object-fit: cover;
+}
+.pf .pf-tile > p:only-child { margin: 0; height: 100%; }
+.pf .pf-tile > figure:only-child figcaption { padding: 0 16px 12px; }
+.pf .pf-tile:hover {
+    border-color: var(--pf-accent);
+    box-shadow: 0 0 0 1px var(--pf-accent);
+}
+.pf .pf-tile .hover-photo:hover {
+    transform: none;
+}
+/* "::: team" -> one card per role */
+.pf .pf-team-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+}
+.pf .pf-team-cards .pf-insight {
+    padding: 18px 20px;
+    background: rgba(0, 0, 0, 0.25);
+}
+.pf .pf-team-cards ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.7;
+}
+/* tag strips that don't have five tags */
+.pf .pf-chips[data-count="3"] { grid-template-columns: repeat(3, 1fr); }
+.pf .pf-chips[data-count="4"] { grid-template-columns: repeat(4, 1fr); }
+.pf .pf-chips[data-count="6"] { grid-template-columns: repeat(6, 1fr); }
+/* tablets: 6 sub-columns, rows of 2 or 3 tags without an orphan */
+@media (max-width: 1000px) {
+    .pf .pf-chips[data-count] { grid-template-columns: repeat(6, 1fr); }
+    .pf .pf-chips[data-count="3"] .highlight,
+    .pf .pf-chips[data-count="6"] .highlight,
+    .pf .pf-chips[data-count="6"] .highlight:nth-child(n + 4) { grid-column: span 2; }
+    .pf .pf-chips[data-count="4"] .highlight,
+    .pf .pf-chips[data-count="4"] .highlight:nth-child(n + 4) { grid-column: span 3; }
+}
+/* phones: two per row, an odd count puts the first tag on its own full row */
+@media (max-width: 560px) {
+    .pf .pf-chips[data-count] { grid-template-columns: 1fr 1fr; }
+    .pf .pf-chips[data-count] .highlight,
+    .pf .pf-chips[data-count] .highlight:nth-child(n + 4) { grid-column: auto; }
+    .pf .pf-chips[data-count="3"] .highlight:first-child,
+    .pf .pf-chips[data-count="5"] .highlight:first-child { grid-column: 1 / -1; }
+}
+@media only screen and (max-width: 900px) {
+    .pf .pf-cols { grid-auto-flow: row; }
+    .pf .pf-intro > .pf-flow { grid-area: auto; }
+}
+
+/* ---------- mobile: one column ---------- */
+@media only screen and (max-width: 900px) {
+    .pf > section {
+        margin: 20px;
+        padding: 5%;
+    }
+    .pf .pf-intro {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: none;
+    }
+    .pf .pf-intro > * {
+        grid-area: auto;
+    }
+    .pf .pf-title {
+        grid-template-columns: 1fr;
+        grid-template-areas: "kicker" "name" "tagline";
+        row-gap: 14px;
+        padding: 26px 24px;
+    }
+    .pf .pf-tagline {
+        padding-left: 0;
+        border-left: 0;
+    }
+    .pf .pf-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    .pf .pf-feature,
+    .pf .pf-features,
+    .pf .pf-shots,
+    .pf .pf-editor-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-auto-flow: row;
+    }
+    .pf .pf-insights {
+        grid-template-columns: 1fr;
+    }
+    .pf .pf-editor-grid {
+        grid-template-areas: none;
+        grid-auto-rows: auto;
+    }
+    .pf .pf-editor-grid figure,
+    .pf .pf-editor-grid .pf-span-2,
+    .pf .pf-editor-grid .pf-span-3,
+    .pf .pf-editor-grid .pf-span-all,
+    .pf .pf-shots figure {
+        grid-area: auto;
+        grid-column: auto;
+        grid-row: auto;
+    }
+}

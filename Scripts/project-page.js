@@ -62,24 +62,25 @@ function parseFrontMatter(text) {
     return { meta, body: text.slice(match[0].length) };
 }
 
+const HIGHLIGHT_LABELS = { team: "Team", role: "Role", year: "Year", duration: "Duration" };
+
+// Pastilles "Label / valeur" sous le titre (bento : Project_Pages/project_bento.css)
 function buildHighlights(meta) {
-    const pills = [];
-    Object.entries(HIGHLIGHT_ICONS).forEach(([key, icon]) => {
-        if (meta[key]) pills.push(`<i class="${icon}"></i> ${meta[key]}`);
+    const chips = [];
+    const chip = (icon, label, value) =>
+        `<div class="highlight"><small>${icon}${label}</small><span>${value}</span></div>`;
+    ["role", "team", "duration", "year"].forEach((key) => {
+        if (meta[key]) chips.push(chip(`<i class="${HIGHLIGHT_ICONS[key]}"></i>`, HIGHLIGHT_LABELS[key], meta[key]));
     });
     if (meta.engine) {
-        const icon = findIcon(meta.engine, ENGINE_ICONS, '<i class="fa-solid fa-gear"></i>');
-        pills.push(`${icon} ${meta.engine}`);
+        chips.push(chip(findIcon(meta.engine, ENGINE_ICONS, '<i class="fa-solid fa-gear"></i>'), "Engine", meta.engine));
     }
     if (meta.platform) {
         const icon = findIcon(meta.platform, PLATFORM_ICONS, "fa-solid fa-gamepad");
-        pills.push(`<i class="${icon}"></i> ${meta.platform}`);
+        chips.push(chip(`<i class="${icon}"></i>`, "Platform", meta.platform));
     }
-    if (pills.length === 0) return "";
-
-    return `<div style="display: flex; flex-wrap: wrap; justify-content: center; height: auto;">
-        ${pills.map((pill) => `<div class="highlight">${pill}</div>`).join("")}
-    </div>`;
+    if (chips.length === 0) return "";
+    return `<div class="pf-chips" data-count="${chips.length}">${chips.join("")}</div>`;
 }
 
 // Remplace les raccourcis d'une ligne (youtube:, video:, [WIP]) par du HTML
@@ -106,7 +107,8 @@ function expandShortcuts(line) {
     }
 
     if (line.trim().toUpperCase() === "[WIP]") return WIP_HTML;
-    return line;
+    // Chemins d'image avec des espaces : Markdown ne les accepte pas tels quels
+    return line.replace(/(!\[[^\]]*\]\()([^)]*)\)/g, (_, start, src) => `${start}${src.trim().replace(/ /g, "%20")})`);
 }
 
 // Transforme chaque "### Titre" + liste en carte d'equipe
@@ -130,15 +132,14 @@ function buildTeam(markdown) {
                 ? [...list.children].map((li) => li.innerHTML)
                 : [];
 
-        cards.push(`<div class="ep-card">
-    <h3><i class="${icon}" aria-hidden="true"></i> ${title}</h3>
-    <ul class="ep-list">${names
-        .map((name) => `<li class="ep-item"><span class="ep-dot"></span><span>${name}</span></li>`)
-        .join("")}</ul>
+        cards.push(`<div class="pf-insight">
+    <i class="${icon}" aria-hidden="true"></i>
+    <h4>${title}</h4>
+    <ul>${names.map((name) => `<li>${name}</li>`).join("")}</ul>
 </div>`);
     });
 
-    return `<div class="grid" style="grid-template-columns: 1fr 1fr; gap: 16px; align-items: center;">${cards.join("")}</div>`;
+    return `<div class="pf-team-cards">${cards.join("")}</div>`;
 }
 
 function buildColumns(lines) {
@@ -151,9 +152,9 @@ function buildColumns(lines) {
         else cells[cells.length - 1].push(line);
     });
     const html = cells.map(
-        (cell) => `<div class="md-cell" style="align-self: center">${buildSectionBody(cell)}</div>`,
+        (cell) => `<div class="pf-tile">${buildSectionBody(cell)}</div>`,
     );
-    return `<div class="grid">${html.join("")}</div>`;
+    return `<div class="pf-cols">${html.join("")}</div>`;
 }
 
 // Gere les blocs "::: columns" et "::: team" (imbricables) ; le reste est du Markdown normal
@@ -207,13 +208,38 @@ function buildPage(text) {
         sections[sections.length - 1].lines.push(line);
     });
 
+    // Le texte avant le premier "# ..." est souvent vide : on l'ignore
+    if (sections.length > 1 && !sections[0].title && !sections[0].lines.join("").trim()) {
+        sections.shift();
+    }
+
     return sections
         .map((section, index) => {
-            const title = section.title ? `<h1>${section.title}</h1>` : "";
-            const highlights = index === 0 ? buildHighlights(meta) : "";
-            return `<section>${title}${highlights}${buildSectionBody(section.lines)}</section>`;
+            const body = buildSectionBody(section.lines);
+            if (index > 0) {
+                const title = section.title ? `<h1>${section.title}</h1>` : "";
+                return `<section>${title}${body}</section>`;
+            }
+            // Premiere section : tuile titre + pastilles, puis le contenu
+            const name = meta.title || section.title;
+            const kicker = meta.kicker || [meta.platform, meta.year].filter(Boolean).join(" · ");
+            return `<section class="pf-intro pf-intro-md">
+    <div class="pf-title">
+        ${kicker ? `<p class="pf-kicker">${kicker}</p>` : ""}
+        <h1>${name}</h1>
+        ${meta.tagline ? `<p class="pf-tagline">${meta.tagline}</p>` : ""}
+    </div>
+    ${buildHighlights(meta)}
+    <div class="pf-flow">${body}</div>
+</section>`;
         })
         .join("");
+}
+
+// Couleurs propres au projet (en-tete "accent:" / "accent-ink:")
+function applyTheme(meta, container) {
+    if (meta.accent) container.style.setProperty("--pf-accent", meta.accent);
+    if (meta["accent-ink"]) container.style.setProperty("--pf-accent-ink", meta["accent-ink"]);
 }
 
 async function loadProjectPage() {
@@ -224,9 +250,11 @@ async function loadProjectPage() {
         if (!name) throw new Error("No project given");
         const response = await fetch(`Project_Pages/${name}.md`);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        container.innerHTML = buildPage(await response.text());
+        const text = await response.text();
+        applyTheme(parseFrontMatter(text).meta, container);
+        container.innerHTML = buildPage(text);
 
-        container.querySelectorAll(".md-cell img").forEach((img) => {
+        container.querySelectorAll(".pf-tile img").forEach((img) => {
             img.classList.add("hover-photo");
             img.loading = "lazy";
             img.decoding = "async";

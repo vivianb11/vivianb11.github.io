@@ -6,6 +6,8 @@ year: 2025
 duration: 2.5 month
 engine: Unreal Engine 5.5.4
 platform: PC
+accent: #f0953a
+accent-ink: #2a1300
 ---
 
 # Eye Piece - Overview

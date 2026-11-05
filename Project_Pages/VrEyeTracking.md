@@ -6,6 +6,8 @@ year: 2024
 duration: 4 month
 engine: Unity
 platform: VR
+accent: #e07fa0
+accent-ink: #2a0a16
 ---
 
 # VR Eye Tracking
