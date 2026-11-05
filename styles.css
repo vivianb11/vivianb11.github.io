@@ -125,7 +125,7 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
     grid-gap: 20px;
     text-align: center;
     align-items: center;
@@ -159,17 +159,17 @@ a {
     border-radius: 10px;
     box-shadow: 0px 0px 10px #000000;
     padding: 20px;
-    max-height: 540px;
+    /* La carte prend la largeur de sa colonne, sans depasser ~80% de la hauteur
+       de l'ecran (60vh de large * 4/3 = 80vh de haut). La hauteur suit le ratio */
+    box-sizing: border-box;
+    width: min(100%, 60vh);
+    justify-self: center;
     aspect-ratio: 3/4;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.item:last-child {
-    aspect-ratio: 0;
 }
 
 .item img,
@@ -533,9 +533,14 @@ nav a {
 .Button.Grid {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 5%;
+    gap: 10px 20px;
     margin-top: 5%;
+}
+
+.item .button {
+    padding: 0 20px;
 }
 
 .highlight {
@@ -653,7 +658,7 @@ nav a {
     }
 
     .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .welcome-text {
