@@ -106,30 +106,6 @@ if (videos.length > 0) {
 }
 //#endregion
 
-// Supprimer le style lors du chargement initial de la page
-addEventListener("DOMContentLoaded", removeOperaUserStyle);
-
-// Surveiller les changements dans le DOM
-var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-        // Vérifier si un nouvel élément <style> avec l'ID operaUserStyle est ajouté
-        if (mutation.addedNodes) {
-            for (var i = 0; i < mutation.addedNodes.length; i++) {
-                var addedNode = mutation.addedNodes[i];
-                if (addedNode.id === "operaUserStyle") {
-                    removeOperaUserStyle(); // Supprimer le style
-                    break;
-                }
-            }
-        }
-    });
-});
-
-// Configurer l'observation pour les ajouts d'éléments au nœud body
-observer.observe(document.body, { childList: true });
-
-//#endregion
-
 //#region Project Page Manager
 window.addEventListener("load", function () {
     const urlParams = new URLSearchParams(window.location.search);
@@ -150,7 +126,7 @@ function animateProjects(searchTags) {
     const projects = document.querySelectorAll(".item");
 
     projects.forEach((project) => {
-        const projectTags = project.project.dataset.tags
+        const projectTags = project.dataset.tags
             .split(",")
             .map((tag) => tag.trim());
         // Check if any of the project's tags match any of the search tags
