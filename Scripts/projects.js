@@ -7,7 +7,9 @@
 // Champs :
 //   title       Titre affiche
 //   visible     true = affiche, false = cache
-//   tags        Utilises par le filtre ?q= (ex: index.html?q=2024,Tech)
+//   tags        Pastilles de la carte + filtre ?q= (annee, moteur, plateforme)
+//   hiddenTags  (optionnel) Tags pour le filtre ?q= uniquement, non affiches
+//               ex: index.html?q=2024  index.html?q=unity,vr  (majuscules ignorees)
 //   image       Chemin de l'image (ou poster de la video)
 //   video       (optionnel) Chemin d'une video, jouee quand elle est visible
 //   alt         Description de l'image
@@ -24,7 +26,7 @@ const PROJECTS = [
     {
         title: "Shards",
         visible: true,
-        tags: ["2024"],
+        tags: ["2024", "Unreal", "PC"],
         image: "Assets/Img/Shards/ShardsPoster.png",
         alt: "Shards game poster",
         description: `Shards is a single-player twin-stick shooter adventure
@@ -37,7 +39,8 @@ const PROJECTS = [
     {
         title: "Game Economy Simulator",
         visible: false,
-        tags: ["2025", "Tech"],
+        tags: ["2025", "Godot", "Mobile"],
+        hiddenTags: ["Tech"],
         image: "Assets/Img/GameEconomySimulator/editor_overview.png",
         video: "Assets/Video/GameEconomySimulator_Trailer_Small.mp4",
         alt: "Game Economy Simulator editor",
@@ -48,7 +51,7 @@ const PROJECTS = [
     {
         title: "Eye Piece",
         visible: true,
-        tags: ["2025"],
+        tags: ["2025", "Unreal", "PC"],
         image: "Assets/Img/EyePiece/Tempo Office Game Title.png",
         alt: "Eye Piece game title",
         description: `An ambitious end-of-year capstone built by a team of 12
@@ -57,9 +60,10 @@ const PROJECTS = [
         page: "project.html?p=EyePiece",
     },
     {
-        title: "Eye Tracking VR",
+        title: "Eye Tracking VR Project",
         visible: true,
-        tags: ["2024", "Tech"],
+        tags: ["2024", "Unity", "VR"],
+        hiddenTags: ["Tech"],
         image: "Assets/Img/ProjetVR/keep_the_crown.png",
         alt: "Eye tracking VR game",
         description: `A VR game made to help people relax during a dental
@@ -70,7 +74,7 @@ const PROJECTS = [
     {
         title: "POSSESSED",
         visible: true,
-        tags: ["2023"],
+        tags: ["2023", "Unity", "PC"],
         image: "Assets/Icons/Placeholder.webp",
         video: "Assets/Video/Possessed_Trailer.mp4",
         alt: "POSSESSED trailer",
@@ -81,7 +85,7 @@ const PROJECTS = [
     {
         title: "Amazing World",
         visible: true,
-        tags: ["2023"],
+        tags: ["2023", "Unity", "Mobile"],
         image: "Assets/Img/SmallProjects/Logo_AMW.png",
         alt: "Amazing World logo",
         fit: "contain",
@@ -92,7 +96,7 @@ const PROJECTS = [
     {
         title: "Square Roots",
         visible: true,
-        tags: ["2023"],
+        tags: ["2023", "Unity", "Web"],
         image: "Assets/Img/SmallProjects/SquareRoots_Ill.png",
         alt: "Square Roots illustration",
         description: `A prototype made at Concordia's Global game jam 2022 with
@@ -102,7 +106,7 @@ const PROJECTS = [
     {
         title: "Dream Drop Starfight",
         visible: true,
-        tags: ["2023"],
+        tags: ["2023", "Unity", "PC"],
         image: "Assets/Img/SmallProjects/DreamDropStarfight.png",
         alt: "Dream Drop Starfight illustration",
         fit: "contain",
@@ -114,7 +118,7 @@ const PROJECTS = [
     {
         title: "Sir's Castle",
         visible: true,
-        tags: ["2022"],
+        tags: ["2022", "Construct 2", "Web"],
         image: "Assets/Img/SmallProjects/Sir'sCastle_Ill.png",
         alt: "Sir's Castle illustration",
         fit: "contain",
@@ -126,7 +130,7 @@ const PROJECTS = [
     {
         title: "Crazy Billard",
         visible: false,
-        tags: ["2022"],
+        tags: ["2022", "Unity", "Web"],
         image: "Assets/Img/CrazyPoolIlustration.png", // image introuvable dans Assets
         alt: "Crazy Billard illustration",
         description: `The result of a amazing experiment of testing out and
@@ -140,7 +144,9 @@ const PROJECTS = [
 //#region Project Grid Builder
 function buildProjectItem(project, index) {
     const item = document.createElement("article");
-    item.dataset.tags = project.tags.join(",");
+    item.dataset.tags = [...project.tags, ...(project.hiddenTags || [])].join(
+        ",",
+    );
 
     // Clic sur la carte : page du projet en priorite, sinon le jeu
     const mainHref = project.page || project.play;

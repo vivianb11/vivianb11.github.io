@@ -113,7 +113,9 @@ window.addEventListener("load", function () {
 
     if (searchTerm) {
         // Split the search term into an array of tags
-        const searchTags = searchTerm.split(",").map((tag) => tag.trim());
+        const searchTags = searchTerm
+            .split(",")
+            .map((tag) => tag.trim().toLowerCase());
 
         // Hide all projects that don't match any of the tags
         animateProjects(searchTags);
@@ -128,7 +130,7 @@ function animateProjects(searchTags) {
     projects.forEach((project) => {
         const projectTags = project.dataset.tags
             .split(",")
-            .map((tag) => tag.trim());
+            .map((tag) => tag.trim().toLowerCase());
         // Check if any of the project's tags match any of the search tags
         const isVisible = projectTags.some((tag) => searchTags.includes(tag));
 
