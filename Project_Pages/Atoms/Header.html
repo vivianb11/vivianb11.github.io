@@ -6,27 +6,28 @@
     />
 </head>
 
-<header>
-    <div class="logo">
-        <a href="../index.html" class="no-underline">
-            <h3>Vivian Boudon</h3>
-        </a>
-    </div>
+<header class="site-header">
+    <a href="/index.html" class="logo no-underline" aria-label="Home">
+        <img src="/Assets/SVG/Logo.svg" alt="" class="logo-mark" />
+        <span class="logo-text">
+            <span class="logo-name">Vivian Boudon</span>
+            <span class="logo-role">Tech Designer &amp; Game Developer</span>
+        </span>
+    </a>
     <nav>
         <ul class="navbar-menu">
-            <!-- <li><a href="../index.html#home">Home</a></li> -->
-            <li><a href="../#projects">Projects</a></li>
-            <li><a href="../#aboutme">About Me</a></li>
+            <li><a href="/#projects">Projects</a></li>
+            <li><a href="/#aboutme">About Me</a></li>
         </ul>
     </nav>
-    <div class="toggle">
-        <!--<label class="label">&#x1F319;</label>-->
+    <div class="toggle socials">
         <a
             href="https://www.linkedin.com/in/vivian-boudon/"
             class="no-underline"
             target="_blank"
+            aria-label="LinkedIn"
         >
-            <i class="fa-brands fa-linkedin fa-2xl"></i>
+            <i class="fa-brands fa-linkedin-in"></i>
         </a>
         <a
             href="mailto:vivianb.pro@gmail.com"
@@ -34,14 +35,15 @@
             aria-label="Copy my email address"
             onclick="copyEmail(event, 'vivianb.pro@gmail.com')"
         >
-            <i class="fa-solid fa-square-envelope fa-2xl"></i>
+            <i class="fa-solid fa-envelope"></i>
         </a>
         <a
             href="https://vivianb11.artstation.com/"
             class="no-underline"
             target="_blank"
+            aria-label="ArtStation"
         >
-            <i class="fa-brands fa-artstation fa-2xl"></i>
+            <i class="fa-brands fa-artstation"></i>
         </a>
     </div>
 </header>
