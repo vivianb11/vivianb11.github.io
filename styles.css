@@ -170,6 +170,8 @@ a {
     width: min(100%, 320px);
     justify-self: center;
     aspect-ratio: 4/5;
+    display: flex;
+    flex-direction: column;
     border-radius: var(--pc-radius);
     background-color: #111;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -217,11 +219,10 @@ a {
 }
 
 /* Bandeau texte en bas */
+/* Pas de position ici : le lien etire (.pc-link::after) doit couvrir toute la
+   carte, pas seulement ce bandeau. La carte pousse le bandeau en bas. */
 .project-card .pc-overlay {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    margin-top: auto;
     padding: 56px 16px 14px;
     display: flex;
     flex-direction: column;
@@ -299,52 +300,107 @@ a {
 .project-card .pc-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 20px;
     margin-top: 4px;
+    height: 20px;
 }
 
-.project-card .pc-cta {
+.project-card .pc-cta,
+.project-card .pc-play {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.72rem;
     font-weight: bold;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.project-card .pc-cta {
+    position: relative;
     color: rgba(255, 255, 255, 0.9);
+    transition: opacity 0.2s ease;
 }
 
 .project-card .pc-cta i {
-    margin-left: 6px;
     color: var(--accent-color);
     transition: transform 0.3s ease;
 }
 
+/* Avec "View project", Play part a droite : la fleche a de la place */
+.project-card .pc-cta + .pc-play {
+    margin-left: auto;
+}
+
+/* Lien secondaire, au-dessus du lien etire de la carte.
+   La pastille de survol reste dans les marges de la carte. */
 .project-card .pc-play {
     position: relative;
     z-index: 2;
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 13px;
+    box-sizing: border-box;
+    height: 32px;
+    /* +5px a droite : place pour le glissement de l'icone au survol */
+    padding: 0 16px 0 11px;
+    margin: -6px 0;
     border-radius: 999px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: #fff;
-    background: var(--accent-color);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    color: var(--accent-color);
     transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
-}
-
-.project-card .pc-play:hover {
-    transform: scale(1.06);
-    filter: brightness(1.12);
+        color 0.2s ease,
+        transform 0.15s ease;
 }
 
 .project-card .pc-play .pc-ext {
-    font-size: 0.7em;
-    opacity: 0.8;
+    font-size: 0.85em;
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+}
+
+/* Survol du bouton Play (ou de toute la carte si Play est la seule action) */
+.project-card .pc-play:hover,
+.project-card.is-clickable:not(:has(.pc-cta)):hover .pc-play {
+    color: #fff;
+}
+
+/* Pastille blanche : apparait serree autour du texte, puis s'agrandit vers
+   la droite en meme temps que l'icone glisse (5px) */
+.project-card .pc-play::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background-color: rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    clip-path: inset(3px 8px 3px 3px round 999px);
+    transition:
+        clip-path 0.3s ease,
+        opacity 0.2s ease;
+}
+
+.project-card .pc-play:hover::before,
+.project-card.is-clickable:not(:has(.pc-cta)):hover .pc-play::before {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 999px);
+}
+
+.project-card .pc-play:hover .pc-ext,
+.project-card.is-clickable:not(:has(.pc-cta)):hover .pc-play .pc-ext {
+    transform: translateX(5px);
+    opacity: 1;
+}
+
+.project-card .pc-play:active {
+    transform: scale(0.94);
+}
+
+/* Sur Play, "View project" se met en retrait : on sait lequel sera clique */
+.project-card:has(.pc-play:hover) .pc-cta {
+    opacity: 0.5;
+}
+
+.project-card.is-clickable:has(.pc-play:hover) .pc-cta i {
+    transform: none;
 }
 
 /* Lien etire : toute la carte est cliquable */
@@ -397,6 +453,12 @@ a {
     transform: translateX(5px);
 }
 
+/* Appui sur la carte */
+.project-card.is-clickable:active:not(:has(.pc-play:active)) {
+    transform: translateY(-3px) scale(0.985);
+    transition-duration: 0.1s;
+}
+
 .project-card.is-static {
     cursor: default;
 }
@@ -415,7 +477,8 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
     .project-card,
-    .project-card * {
+    .project-card *,
+    .project-card *::before {
         transition: none !important;
     }
 

@@ -180,12 +180,10 @@ function buildProjectItem(project, index) {
     }
     if (project.play) {
         const icon = project.playIcon || "fa-solid fa-play";
-        const external = project.page
-            ? ""
-            : ' <i class="fa-solid fa-arrow-up-right-from-square pc-ext"></i>';
         footer.push(`<a class="pc-play" href="${project.play}" target="_blank"
-                rel="noopener" aria-label="Play ${project.title}">
-                <i class="${icon}"></i> Play${external}</a>`);
+                rel="noopener"><i class="${icon}"></i>
+                Play
+                <i class="fa-solid fa-arrow-up-right-from-square pc-ext"></i></a>`);
     }
 
     item.innerHTML = `
