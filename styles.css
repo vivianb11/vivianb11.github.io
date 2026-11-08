@@ -129,36 +129,64 @@ header.site-header .logo-role {
 header.site-header .navbar-menu {
     list-style: none;
     display: flex;
-    gap: 4px;
+    gap: 22px;
     margin: 0;
-    padding: 4px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 999px;
+    padding: 0;
 }
 
 header.site-header .navbar-menu li {
     margin: 0;
 }
 
+/* Numbered nav links: "01 PROJECTS", "02 ABOUT ME" */
 header.site-header .navbar-menu li a {
-    display: block;
-    padding: 8px 18px;
-    border-radius: 999px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 8px 2px;
     color: var(--muted-text-color);
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;
-    transition:
-        color 0.2s ease,
-        background-color 0.2s ease;
+    transition: color 0.2s ease;
+}
+
+header.site-header .navbar-menu li a::before {
+    content: attr(data-num);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 11px;
+    letter-spacing: 0;
+    color: var(--accent-color);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+header.site-header .navbar-menu li a span {
+    padding-bottom: 3px;
+    background: linear-gradient(currentColor, currentColor) left bottom / 0
+        1px no-repeat;
+    transition: background-size 0.3s ease;
 }
 
 header.site-header .navbar-menu li a:hover,
-header.site-header .navbar-menu li a:focus-visible {
+header.site-header .navbar-menu li a:focus-visible,
+header.site-header .navbar-menu li a.is-active {
     color: var(--text-color);
-    background-color: rgba(255, 255, 255, 0.08);
+}
+
+header.site-header .navbar-menu li a:hover::before,
+header.site-header .navbar-menu li a:focus-visible::before,
+header.site-header .navbar-menu li a.is-active::before {
+    opacity: 1;
+}
+
+header.site-header .navbar-menu li a:hover span,
+header.site-header .navbar-menu li a:focus-visible span,
+header.site-header .navbar-menu li a.is-active span {
+    background-size: 100% 1px;
 }
 
 header.site-header .socials {
@@ -628,6 +656,189 @@ video {
     color: var(--text-color);
 }
 
+/* Section heading: small accent eyebrow + big title */
+.section-head {
+    margin-bottom: 36px;
+    text-align: left;
+}
+
+/* Section number, matching the 01 / 02 in the header nav */
+.section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent-color);
+}
+
+.section-eyebrow::after {
+    content: "";
+    width: 32px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--accent-color);
+}
+
+.section-head h1 {
+    margin: 6px 0 0;
+    text-align: left;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 40px;
+    letter-spacing: -0.5px;
+}
+
+@media (max-width: 600px) {
+    .section-head h1 {
+        font-size: 30px;
+    }
+}
+
+/* About me: intro + skill tiles */
+.about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    gap: 56px;
+    align-items: start;
+    text-align: left;
+}
+
+.skill-tiles h3 {
+    margin: 18px 0 10px;
+    padding: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-text-color);
+}
+
+.about-intro h2 {
+    margin: 0 0 16px;
+    font-size: 2rem;
+    color: var(--text-color);
+}
+
+.about-intro p {
+    margin: 0 0 14px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.about-intro strong {
+    color: var(--text-color);
+}
+
+.about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--accent-color);
+    background: var(--accent-color);
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.about-btn:hover {
+    transform: translateY(-2px);
+}
+
+.about-btn--ghost {
+    background: var(--background-color);
+    border-color: transparent;
+    color: var(--text-color);
+}
+
+.about-btn--ghost:hover {
+    border-color: var(--accent-color);
+}
+
+@media (max-width: 860px) {
+    .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+    }
+}
+
+.skill-tiles h3:first-child {
+    margin-top: 0;
+}
+
+.skill-tiles ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.skill-tiles li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 6px;
+    text-align: center;
+    font-size: 0.8rem;
+    background: var(--background-color);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.skill-tiles li:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.skill-tiles li i {
+    font-size: 1.3rem;
+    color: var(--accent-color);
+}
+
+/* Logos without a Font Awesome icon: SVG used as a mask, tinted with the accent */
+.icon-logo {
+    width: 1.3rem;
+    height: 1.3rem;
+    background-color: var(--accent-color);
+    -webkit-mask: var(--logo) center / contain no-repeat;
+    mask: var(--logo) center / contain no-repeat;
+}
+
+.icon-unreal {
+    --logo: url("Assets/Icons/Unreal-logo.svg");
+}
+
+.icon-godot {
+    --logo: url("Assets/Icons/Godot-logo.svg");
+}
+
+.icon-blender {
+    --logo: url("Assets/Icons/Blender-logo.svg");
+}
+
+[data-theme="light"] .skill-tiles li {
+    background: var(--secondary-color);
+}
+
 .card-deck {
     display: flex;
     justify-content: center;
@@ -1048,9 +1259,13 @@ nav a {
         height: 34px;
     }
 
+    header.site-header .navbar-menu {
+        gap: 14px;
+    }
+
     header.site-header .navbar-menu li a {
-        padding: 7px 12px;
-        font-size: 14px;
+        font-size: 12px;
+        letter-spacing: 1.5px;
     }
 
     header.site-header .socials {
@@ -1084,8 +1299,7 @@ nav a {
     }
 
     header.site-header .navbar-menu li a {
-        padding: 6px 10px;
-        font-size: 13px;
+        letter-spacing: 1px;
     }
 
     header.site-header .socials a {

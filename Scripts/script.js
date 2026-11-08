@@ -146,3 +146,44 @@ function animateProjects(searchTags) {
     });
 }
 //#endregion
+
+//#region Header Active Section
+// Highlights the header link of the section currently on screen (index only).
+(function () {
+    const sections = ["projects", "aboutme"]
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+    if (!sections.length) return;
+
+    const visible = new Set();
+    const update = () => {
+        // Last section (in page order) that is on screen wins
+        const current = sections.filter((s) => visible.has(s)).pop();
+        document
+            .querySelectorAll("header.site-header .navbar-menu a")
+            .forEach((a) => {
+                const id = a.getAttribute("href").split("#")[1];
+                a.classList.toggle("is-active", !!current && id === current.id);
+            });
+    };
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((e) =>
+                e.isIntersecting ? visible.add(e.target) : visible.delete(e.target),
+            );
+            update();
+        },
+        { rootMargin: "-45% 0px -45% 0px" },
+    );
+    sections.forEach((s) => observer.observe(s));
+
+    // The header is injected asynchronously; refresh once it exists
+    new MutationObserver((_, mo) => {
+        if (document.querySelector("header.site-header")) {
+            update();
+            mo.disconnect();
+        }
+    }).observe(document.body, { childList: true, subtree: true });
+})();
+//#endregion

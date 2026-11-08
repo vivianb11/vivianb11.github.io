@@ -28,70 +28,71 @@
         <div w3-include-html="Project_Pages/Atoms/Header.html"></div>
 
         <section id="projects">
-            <h1>Projects</h1>
+            <header class="section-head">
+                <span class="section-eyebrow">01</span>
+                <h1>Projects</h1>
+            </header>
             <!-- Les projets sont definis dans Scripts/projects.js -->
             <div class="grid"></div>
         </section>
 
         <section id="aboutme">
-            <div class="grid">
-                <div class="card-deck">
-                    <div class="card active">
-                        <h2 class="cardTitle">Knowledge</h2>
-                        <div class="cardContent">
-                            <div class="triangle prev"></div>
-                            <ul>
-                                <li>Programming</li>
-                                <li>3D Modeling</li>
-                                <li>Version Control</li>
-                                <li>UX Design</li>
-                            </ul>
-                            <div class="triangle next"></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2>Soft Skills</h2>
-                        <div class="cardContent">
-                            <div class="triangle prev"></div>
-                            <ul>
-                                <li>Open Minded</li>
-                                <li>Organized</li>
-                                <li>Team Work</li>
-                                <li>Curious</li>
-                            </ul>
-                            <div class="triangle next"></div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h2>Software I use</h2>
-                        <div class="cardContent">
-                            <div class="triangle prev"></div>
-                            <ul>
-                                <li>Unity</li>
-                                <li>Blender</li>
-                                <li>Figma</li>
-                                <li>Unreal Engine</li>
-                                <li>Godot</li>
-                            </ul>
-                            <div class="triangle next"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="welcome-text">
-                        <strong>Hi, I'm Vivian!</strong><br /><br />
+            <header class="section-head">
+                <span class="section-eyebrow">02</span>
+                <h1>About Me</h1>
+            </header>
+            <div class="about-grid">
+                <div class="about-intro">
+                    <h2>Hi, I'm Vivian!</h2>
+                    <p>
                         I'm a Tech Designer who loves building the systems that
                         make games feel good, from gameplay programming to tools
                         and UX. I studied at ISART Digital Montréal, shipped
-                        Shards on Steam with a team of 9, and led tech on
-                        Eye Piece, a 12-person capstone. <br />
-                        <br />
+                        <strong>Shards</strong> on Steam with a team of 9, and
+                        co-led tech on <strong>Eye Piece</strong>, a 12-person
+                        capstone.
+                    </p>
+                    <p>
                         I'm currently looking for a job in the industry, as well
                         as working on some side projects to have fun.
                     </p>
+                    <div class="about-links">
+                        <a class="about-btn" href="mailto:vivianb.pro@gmail.com"
+                            ><i class="fa-solid fa-envelope"></i> Get in touch</a
+                        >
+                        <a
+                            class="about-btn about-btn--ghost"
+                            href="https://www.linkedin.com/in/vivian-boudon/"
+                            target="_blank"
+                            rel="noopener"
+                            ><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a
+                        >
+                    </div>
+                </div>
+
+                <div class="skill-tiles">
+                    <h3>Knowledge</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-code"></i>Programming</li>
+                        <li><i class="fa-solid fa-cube"></i>3D Modeling</li>
+                        <li><i class="fa-solid fa-code-branch"></i>Version Control</li>
+                        <li><i class="fa-solid fa-object-group"></i>UX Design</li>
+                    </ul>
+                    <h3>Software I use</h3>
+                    <ul>
+                        <li><span class="icon-logo icon-unreal" aria-hidden="true"></span>Unreal Engine</li>
+                        <li><i class="fa-brands fa-unity"></i>Unity</li>
+                        <li><span class="icon-logo icon-godot" aria-hidden="true"></span>Godot</li>
+                        <li><span class="icon-logo icon-blender" aria-hidden="true"></span>Blender</li>
+                        <li><i class="fa-brands fa-figma"></i>Figma</li>
+                    </ul>
+                    <h3>Soft Skills</h3>
+                    <ul>
+                        <li><i class="fa-solid fa-lightbulb"></i>Open Minded</li>
+                        <li><i class="fa-solid fa-list-check"></i>Organized</li>
+                        <li><i class="fa-solid fa-people-group"></i>Team Work</li>
+                        <li><i class="fa-solid fa-magnifying-glass"></i>Curious</li>
+                    </ul>
                 </div>
             </div>
         </section>
