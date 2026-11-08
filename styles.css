@@ -39,6 +39,18 @@ body > div:has(> header.site-header) {
     top: 0;
     z-index: 100;
     padding-top: 16px;
+    transition: transform 0.3s ease;
+}
+
+/* Hidden while scrolling down, back on scroll up (Scripts/script.js) */
+html.header-hidden body > div:has(> header.site-header) {
+    transform: translateY(calc(-100% - 8px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body > div:has(> header.site-header) {
+        transition: none;
+    }
 }
 
 header.site-header {

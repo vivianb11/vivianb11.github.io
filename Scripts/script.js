@@ -147,6 +147,52 @@ function animateProjects(searchTags) {
 }
 //#endregion
 
+//#region Header Hide On Scroll
+// Hides the header when scrolling down, shows it again when scrolling up.
+(function () {
+    const root = document.documentElement;
+    const SHOW_NEAR_TOP = 80; // always visible near the top of the page
+    const MIN_DELTA = 8; // ignore tiny scroll jitter
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+        const header = document.querySelector("header.site-header");
+        const keepVisible =
+            y < SHOW_NEAR_TOP || (header && header.contains(document.activeElement));
+
+        if (keepVisible || delta < -MIN_DELTA) {
+            root.classList.remove("header-hidden");
+            lastY = y;
+        } else if (delta > MIN_DELTA) {
+            root.classList.add("header-hidden");
+            lastY = y;
+        }
+        ticking = false;
+    };
+
+    window.addEventListener(
+        "scroll",
+        () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(update);
+            }
+        },
+        { passive: true },
+    );
+
+    // Keyboard users tabbing into the header should see it
+    document.addEventListener("focusin", (e) => {
+        if (e.target.closest && e.target.closest("header.site-header")) {
+            root.classList.remove("header-hidden");
+        }
+    });
+})();
+//#endregion
+
 //#region Header Active Section
 // Highlights the header link of the section currently on screen (index only).
 (function () {
