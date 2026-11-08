@@ -38,6 +38,10 @@ accent-ink: #1d1500
   colonne de droite
   :::
 
+  ```cs PlayerController.cs   -> snippet de code (fenetre editeur + coloration)
+  ... ton code ...              langage : cs, cpp, gdscript, python, js, hlsl...
+  ```                           le nom de fichier apres le langage est optionnel
+
   ::: team            -> cartes de l'equipe
   ### Game Designers  (icone auto ; ou force-la : ### Testeurs {fa-bug})
   - Prenom Nom
