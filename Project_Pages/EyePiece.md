@@ -42,7 +42,7 @@ This project was brought to life by an incredible multidisciplinary team of 12 p
 
 ::: team
 ### Game Designers
-- Josselin Querne
+- Josselin Querné
 - Alexandre Chahinian
 - Alexander Morvan
 - Thomas Ouellet
