@@ -857,3 +857,98 @@
         grid-row: auto;
     }
 }
+
+/* ---------- Code snippets (```lang Fichier.cs in the .md) ---------- */
+/* Grid children default to min-width:auto: without this a long code line widens the page */
+.pf .pf-flow,
+.pf .pf-tile {
+    min-width: 0;
+}
+
+.pf .pf-code {
+    max-width: 100%;
+    margin: 16px 0;
+    background: #161616;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    text-align: left;
+}
+
+.pf .pf-code figcaption {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 10px 14px;
+    background: #222;
+}
+
+.pf .pf-code-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.pf .pf-code-dots i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #555;
+}
+
+.pf .pf-code-dots i:first-child {
+    background: var(--pf-accent);
+}
+
+.pf .pf-code-file {
+    font-family: Consolas, "Cascadia Code", "Courier New", monospace;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.pf .pf-code-copy {
+    margin-left: auto;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: #888;
+    cursor: pointer;
+}
+
+.pf .pf-code-copy:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
+.pf .pf-code pre {
+    margin: 0;
+    padding: 18px 20px 20px;
+    overflow-x: auto;
+    max-height: 520px;
+}
+
+.pf .pf-code code {
+    font-family: Consolas, "Cascadia Code", "Courier New", monospace;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #ddd;
+    white-space: pre;
+    background: none;
+}
+
+/* Syntax colours (highlight.js classes) */
+.pf .pf-code .hljs-keyword,
+.pf .pf-code .hljs-built_in,
+.pf .pf-code .hljs-meta .hljs-keyword { color: #c792ea; }
+.pf .pf-code .hljs-type,
+.pf .pf-code .hljs-title.class_ { color: #ffcb6b; }
+.pf .pf-code .hljs-title.function_,
+.pf .pf-code .hljs-property,
+.pf .pf-code .hljs-attr { color: #82aaff; }
+.pf .pf-code .hljs-string,
+.pf .pf-code .hljs-regexp { color: #c3e88d; }
+.pf .pf-code .hljs-number,
+.pf .pf-code .hljs-literal { color: #f78c6c; }
+.pf .pf-code .hljs-comment { color: #6a6a6a; font-style: italic; }
+.pf .pf-code .hljs-meta { color: #89ddff; }

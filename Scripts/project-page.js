@@ -40,6 +40,52 @@ const WIP_HTML = `<div class="wip-box">
     details about my contributions on this project.</p>
 </div>`;
 
+// Blocs de code ```cs Fichier.cs -> fenetre "editeur" avec coloration
+// Langage optionnel, puis nom de fichier optionnel (affiche dans la barre)
+const CODE_LANG_ALIASES = { gdscript: "python", gd: "python", hlsl: "cpp", glsl: "cpp", ue: "cpp" };
+const CODE_LANG_NAMES = {
+    cs: "C#", csharp: "C#", cpp: "C++", "c++": "C++", c: "C", gdscript: "GDScript", gd: "GDScript",
+    py: "Python", python: "Python", js: "JavaScript", javascript: "JavaScript", ts: "TypeScript",
+    json: "JSON", hlsl: "HLSL", glsl: "GLSL", lua: "Lua", bash: "Shell", sh: "Shell",
+};
+const FENCE = /^\s*(```|~~~)/;
+
+function escapeHtml(text) {
+    return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function renderCodeWindow(code, info = "") {
+    const [lang = "", ...rest] = info.trim().split(/\s+/);
+    const key = lang.toLowerCase();
+    const file = rest.join(" ") || CODE_LANG_NAMES[key] || lang;
+    const hlLang = CODE_LANG_ALIASES[key] || key;
+
+    let body = escapeHtml(code);
+    if (window.hljs && hlLang && hljs.getLanguage(hlLang)) {
+        body = hljs.highlight(code, { language: hlLang, ignoreIllegals: true }).value;
+    }
+    return `<figure class="pf-code">
+    <figcaption><span class="pf-code-dots"><i></i><i></i><i></i></span>${file ? `<span class="pf-code-file">${escapeHtml(file)}</span>` : ""}
+        <button type="button" class="pf-code-copy" aria-label="Copy code"><i class="fa-regular fa-copy"></i></button></figcaption>
+    <pre><code class="hljs">${body}</code></pre>
+</figure>`;
+}
+
+marked.use({ renderer: { code: (code, info) => renderCodeWindow(code, info) } });
+
+document.addEventListener("click", async (event) => {
+    const button = event.target.closest(".pf-code-copy");
+    if (!button) return;
+    const code = button.closest(".pf-code").querySelector("code").innerText;
+    try {
+        await navigator.clipboard.writeText(code);
+        button.innerHTML = '<i class="fa-solid fa-check"></i>';
+    } catch {
+        button.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    }
+    setTimeout(() => (button.innerHTML = '<i class="fa-regular fa-copy"></i>'), 1500);
+});
+
 function findIcon(text, icons, fallback) {
     const key = Object.keys(icons).find((k) => text.toLowerCase().includes(k));
     return key ? icons[key] : fallback;
@@ -163,6 +209,7 @@ function buildSectionBody(lines) {
     let buffer = [];
     let block = null;
     let depth = 0;
+    let inFence = false;
 
     const flush = () => {
         if (block === "columns") html += buildColumns(buffer);
@@ -172,6 +219,13 @@ function buildSectionBody(lines) {
     };
 
     lines.forEach((line) => {
+        // Dans un bloc de code : on garde la ligne telle quelle
+        if (FENCE.test(line)) inFence = !inFence;
+        else if (inFence) {
+            buffer.push(line);
+            return;
+        }
+
         const open = line.match(/^:::\s*(\w+)\s*$/);
         const close = /^:::\s*$/.test(line);
 
@@ -199,8 +253,10 @@ function buildPage(text) {
 
     // Chaque titre "# ..." commence une nouvelle section
     const sections = [];
+    let inFence = false;
     body.split(/\r?\n/).forEach((line) => {
-        const heading = line.match(/^#\s+(.*)$/);
+        if (FENCE.test(line)) inFence = !inFence;
+        const heading = !inFence && line.match(/^#\s+(.*)$/);
         if (heading || sections.length === 0) {
             sections.push({ title: heading ? heading[1] : "", lines: [] });
             if (heading) return;
