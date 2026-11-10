@@ -11,9 +11,9 @@ const HIGHLIGHT_ICONS = {
 };
 
 const ENGINE_ICONS = {
-    unreal: '<img src="Assets/Icons/Unreal-logo.svg" alt="Unreal Engine Logo" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;" />',
+    unreal: '<i class="icon-logo icon-unreal" aria-hidden="true"></i>',
     unity: '<i class="fa-brands fa-unity"></i>',
-    godot: '<i class="fa-solid fa-gamepad"></i>',
+    godot: '<i class="icon-logo icon-godot" aria-hidden="true"></i>',
 };
 
 const PLATFORM_ICONS = {
@@ -264,8 +264,9 @@ function buildPage(text) {
         sections[sections.length - 1].lines.push(line);
     });
 
-    // Le texte avant le premier "# ..." est souvent vide : on l'ignore
-    if (sections.length > 1 && !sections[0].title && !sections[0].lines.join("").trim()) {
+    // Le texte avant le premier "# ..." est souvent vide (ou un commentaire) : on l'ignore
+    const isBlank = (lines) => !lines.join("\n").replace(/<!--[\s\S]*?-->/g, "").trim();
+    if (sections.length > 1 && !sections[0].title && isBlank(sections[0].lines)) {
         sections.shift();
     }
 

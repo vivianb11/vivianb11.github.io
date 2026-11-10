@@ -153,15 +153,19 @@ function animateProjects(searchTags) {
     const root = document.documentElement;
     const SHOW_NEAR_TOP = 80; // always visible near the top of the page
     const MIN_DELTA = 8; // ignore tiny scroll jitter
+    const REVEAL_EDGE = 16; // moving the mouse to the top edge brings it back
     let lastY = window.scrollY;
     let ticking = false;
+    let hovered = false; // mouse is over the header: never hide it
 
     const update = () => {
         const y = window.scrollY;
         const delta = y - lastY;
         const header = document.querySelector("header.site-header");
         const keepVisible =
-            y < SHOW_NEAR_TOP || (header && header.contains(document.activeElement));
+            y < SHOW_NEAR_TOP ||
+            hovered ||
+            (header && header.contains(document.activeElement));
 
         if (keepVisible || delta < -MIN_DELTA) {
             root.classList.remove("header-hidden");
@@ -183,6 +187,17 @@ function animateProjects(searchTags) {
         },
         { passive: true },
     );
+
+    // Mouse over the header keeps it shown; mouse at the top edge reveals it
+    document.addEventListener("mousemove", (e) => {
+        const header = document.querySelector("header.site-header");
+        hovered = !!header && (header.contains(e.target) || e.clientY <= REVEAL_EDGE);
+        if (hovered) {
+            root.classList.remove("header-hidden");
+            lastY = window.scrollY;
+        }
+    });
+    document.documentElement.addEventListener("mouseleave", () => (hovered = false));
 
     // Keyboard users tabbing into the header should see it
     document.addEventListener("focusin", (e) => {
