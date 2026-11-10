@@ -145,6 +145,57 @@ I built the systems that turn that data into a game: inventory, hero progression
     </div>
 </div>
 
+# Built On by Students
+
+<p class="pf-lead">After release, the project became the starting codebase for student teams. Each team designed its own game on top of it: their own heroes, art, campaigns, story and balancing, all through the same data pipeline.</p>
+
+<div class="pf-students">
+    <article class="pf-feature">
+        <div class="pf-pair">
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/fantasy_lore.jpg" alt="Illustrated story chapter" loading="lazy" /><figcaption>Story chapter</figcaption></figure>
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/fantasy_fight.jpg" alt="Dragon knights in combat" loading="lazy" /><figcaption>Combat</figcaption></figure>
+        </div>
+        <div>
+            <h3><i class="fa-solid fa-dragon"></i> Dragon riders</h3>
+            <p>A dark-fantasy war story told across illustrated chapters, with knights, dragons and side-memories of the characters.</p>
+            <p class="pf-credits">By Etienne, Ilan &amp; Edouard</p>
+        </div>
+    </article>
+    <article class="pf-feature">
+        <div class="pf-pair">
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/food_campaigns.jpg" alt="Campaign selection" loading="lazy" /><figcaption>Campaigns</figcaption></figure>
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/food_fight.jpg" alt="Food heroes in combat" loading="lazy" /><figcaption>Combat</figcaption></figure>
+        </div>
+        <div>
+            <h3><i class="fa-solid fa-pepper-hot"></i> Food fight</h3>
+            <p>Fruit and vegetable heroes against junk food, with a tutorial and tips campaign, boss levels and an original soundtrack.</p>
+            <p class="pf-credits">By Adel, Joshua &amp; Xavier</p>
+        </div>
+    </article>
+    <article class="pf-feature">
+        <div class="pf-pair">
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/robots_home.jpg" alt="Fuel economy buildings" loading="lazy" /><figcaption>Fuel economy</figcaption></figure>
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/robots_fight.jpg" alt="Robots in combat" loading="lazy" /><figcaption>Combat</figcaption></figure>
+        </div>
+        <div>
+            <h3><i class="fa-solid fa-robot"></i> Scrap robots</h3>
+            <p>A post-apocalyptic world where the last robots fight over fuel, with its own buildings, currencies and loot boxes.</p>
+            <p class="pf-credits">By ThePrometheanKing, MapleStaple &amp; Ophiuchuscheh</p>
+        </div>
+    </article>
+    <article class="pf-feature">
+        <div class="pf-pair">
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/comics_home.jpg" alt="Comic-book home screen" loading="lazy" /><figcaption>Home screen</figcaption></figure>
+            <figure data-zoom><img class="hover-photo" src="Assets/Img/GameEconomySimulator/students/comics_fight.jpg" alt="Comic-book heroes in combat" loading="lazy" /><figcaption>Combat</figcaption></figure>
+        </div>
+        <div>
+            <h3><i class="fa-solid fa-mask"></i> Comic-book heroes</h3>
+            <p>Pulp superheroes and villains, with a comic-panel look and a different colour scheme for each chapter.</p>
+            <p class="pf-credits">By Ryan, Issam &amp; Robin</p>
+        </div>
+    </article>
+</div>
+
 # The Team ✨
 
 <p class="pf-team-line">Made with <strong>Raphaël Daubelcour</strong> (combat, buildings, data parser) and <strong>Vincent</strong> (game data &amp; balancing).</p>

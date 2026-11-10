@@ -24,3 +24,63 @@
 @media only screen and (max-width: 900px) {
     .pf .pf-editor-grid { grid-template-areas: none; }
 }
+
+/* "Built On by Students": one card per team, two screenshots side by side */
+.pf .pf-students {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.pf .pf-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--pf-tile-bg);
+}
+.pf .pf-pair figure {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+.pf .pf-pair .hover-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+}
+.pf .pf-pair figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 20px 10px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    pointer-events: none;
+}
+.pf .pf-pair [data-zoom]::before {
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 10px;
+}
+.pf .pf-students .pf-feature p {
+    line-height: 1.55;
+}
+.pf .pf-credits {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--muted-text-color, #9aa3b2);
+}
+@media only screen and (max-width: 900px) {
+    .pf .pf-students {
+        grid-template-columns: 1fr;
+    }
+}
