@@ -13,7 +13,7 @@ accent-ink: #062224
 # Shards - Overview
 
 ::: columns
-**Shards** is a single-player adventure game where you play as a small clay automaton. It is a **PC** game made in *Unreal Engine 5.5.4*.
+**Shards** is a single-player adventure game where you play as a small clay automaton. It is a **PC** game made in _Unreal Engine 5.5.4_.
 
 Set off to discover a mysterious, hand-sculpted universe, solve small environmental puzzles, and uncover the secrets behind the origins of a ruined pottery civilization.
 
@@ -25,15 +25,14 @@ But don't let the fragile beauty of this world fool you: exploration will someti
 ::: columns
 youtube: sM1dqK_42_0 | Shards Trailer
 +++
-"While bodies fail the soul,
 
-Clay shatters,
+> While bodies fail the soul,
+> Clay shatters,
+> Shards and water,
+> Shape a vessel anew.
+>
+> — The Creator
 
-Shards and water,
-
-Shape a vessel anew."
-
-**The Creator**
 :::
 
 # What I Did on the Project
@@ -50,18 +49,22 @@ This project was brought to life by an incredible multidisciplinary team of 9 pe
 **Special thanks to:**
 
 ::: team
+
 ### Game Designers
+
 - Alban Socha
 - Alexandre Chahinian
 - Pablo Billet
 
 ### Artists
+
 - Ines Wespy
 - Iseline Duniel
 - Titouan Cadoret
 - Bastien Dumont
 
 ### Sound Designer
+
 - Alban Gauthier
-:::
-:::
+  :::
+  :::

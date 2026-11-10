@@ -35,6 +35,8 @@ accent-ink: #1d1500
   youtube: ID_VIDEO | Legende                       -> video YouTube
   video: Assets/Video/trailer.mp4 | Assets/Img/poster.png  -> video locale
   [WIP]                                             -> encadre "Work in Progress"
+  > texte             -> citation (une ligne "> — Auteur" a la fin, apres une
+                         ligne ">" vide, devient la signature)
 
   ::: columns         -> cote a cote
   colonne de gauche

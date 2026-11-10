@@ -793,6 +793,83 @@
 }
 .pf .pf-tile > p:only-child { margin: 0; height: 100%; }
 .pf .pf-tile > figure:only-child figcaption { padding: 0 16px 12px; }
+/* citation: Markdown "> text", signed by a last paragraph "> — Author"
+   (see Project_Pages/_Template.md) */
+.pf blockquote {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 26px 28px 24px 72px;
+    text-align: left;
+    background:
+        radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--pf-accent) 14%, transparent), transparent 60%),
+        var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-left: 3px solid var(--pf-accent);
+    border-radius: var(--pf-radius);
+}
+.pf blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: 6px;
+    left: 18px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 84px;
+    line-height: 1;
+    color: var(--pf-accent);
+    opacity: 0.85;
+    pointer-events: none;
+}
+.pf blockquote p {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #fff;
+    white-space: pre-line; /* keeps the line breaks of a poem */
+}
+.pf blockquote p + p {
+    margin-top: 0.8em;
+}
+.pf blockquote p.pf-cite {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--pf-accent);
+    white-space: normal;
+}
+.pf blockquote p.pf-cite::before {
+    content: "";
+    flex: none;
+    width: 28px;
+    height: 2px;
+    background: currentColor;
+}
+@media only screen and (max-width: 600px) {
+    .pf blockquote { padding: 22px 18px 20px 54px; }
+    .pf blockquote::before { left: 12px; font-size: 64px; }
+    .pf blockquote p { font-size: 1.05rem; }
+}
+/* a tile holding only a citation: the citation is the tile */
+.pf .pf-tile:has(> blockquote:only-child) {
+    padding: 0;
+    border: 0;
+    background: none;
+}
+.pf .pf-tile > blockquote:only-child {
+    height: 100%;
+}
 .pf .pf-tile:hover {
     border-color: var(--pf-accent);
     box-shadow: 0 0 0 1px var(--pf-accent);

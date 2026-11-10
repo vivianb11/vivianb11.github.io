@@ -409,6 +409,14 @@ async function loadProjectPage() {
             img.loading = "lazy";
             img.decoding = "async";
         });
+        // Citation : un dernier paragraphe "— Auteur" devient la signature
+        container.querySelectorAll("blockquote").forEach((quote) => {
+            const last = quote.querySelector(":scope > p:last-child");
+            const dash = /^\s*(—|–|--|-)\s*/;
+            if (!last || !dash.test(last.textContent)) return;
+            last.innerHTML = last.innerHTML.replace(dash, "");
+            last.classList.add("pf-cite");
+        });
         container.querySelectorAll(".pf-carousel").forEach(initCarousel);
         initLightbox(container);
     } catch (error) {
