@@ -294,9 +294,102 @@ function buildPage(text) {
 }
 
 // Couleurs propres au projet (en-tete "accent:" / "accent-ink:")
+// et feuille de style en plus (en-tete "css: MonProjet.css", dans Project_Pages/)
 function applyTheme(meta, container) {
     if (meta.accent) container.style.setProperty("--pf-accent", meta.accent);
     if (meta["accent-ink"]) container.style.setProperty("--pf-accent-ink", meta["accent-ink"]);
+    if (meta.css && /^[\w-]+\.css$/.test(meta.css)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `Project_Pages/${meta.css}`;
+        document.head.appendChild(link);
+    }
+}
+
+// Diaporama : <div class="pf-carousel"> (voir GameEconomySimulator.md)
+// fleches, points, compteur, clavier et glisser du doigt
+function initCarousel(root) {
+    const track = root.querySelector(".pf-evo");
+    const slides = [...track.children];
+    const dots = root.querySelector(".pf-dots");
+    const count = root.querySelector(".pf-count");
+    const prev = root.querySelector(".pf-prev");
+    const next = root.querySelector(".pf-next");
+    const pad = (n) => String(n).padStart(2, "0");
+    let index = 0;
+
+    const go = (i) => {
+        index = Math.max(0, Math.min(slides.length - 1, i));
+        track.style.transform = `translateX(${-index * 100}%)`;
+        if (count) count.innerHTML = `<strong>${pad(index + 1)}</strong> / ${pad(slides.length)}`;
+        if (dots) [...dots.children].forEach((d, k) => d.classList.toggle("on", k === index));
+        slides.forEach((s, k) => s.setAttribute("aria-hidden", k !== index));
+        if (prev) prev.disabled = index === 0;
+        if (next) next.disabled = index === slides.length - 1;
+    };
+
+    slides.forEach((_, i) => {
+        if (!dots) return;
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.setAttribute("aria-label", `Show slide ${i + 1}`);
+        dot.addEventListener("click", () => go(i));
+        dots.appendChild(dot);
+    });
+    prev?.addEventListener("click", () => go(index - 1));
+    next?.addEventListener("click", () => go(index + 1));
+    root.tabIndex = 0;
+    root.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") go(index - 1);
+        if (e.key === "ArrowRight") go(index + 1);
+    });
+    let x0 = null;
+    root.addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+    root.addEventListener("touchend", (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+        x0 = null;
+    });
+    go(0);
+}
+
+// Visionneuse : clic sur une <figure data-zoom> -> image entiere
+function initLightbox(container) {
+    const figures = container.querySelectorAll("[data-zoom]");
+    if (figures.length === 0) return;
+
+    const box = document.createElement("div");
+    box.className = "pf-lightbox";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", "Image viewer");
+    box.innerHTML = `<button class="pf-lightbox-close" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="pf-lightbox-inner"><img alt="" /></div>
+    <p class="pf-lightbox-caption"></p>`;
+    document.body.appendChild(box);
+
+    const img = box.querySelector("img");
+    const caption = box.querySelector(".pf-lightbox-caption");
+    const close = () => box.classList.remove("open");
+    // captures tres hautes (inspecteur) : defilement vertical ; le reste tient dans l'ecran
+    img.addEventListener("load", () => box.classList.toggle("tall", img.naturalHeight > img.naturalWidth * 1.2));
+
+    figures.forEach((figure) =>
+        figure.addEventListener("click", () => {
+            const source = figure.querySelector("img");
+            if (!source) return;
+            img.src = source.src;
+            img.alt = source.alt;
+            caption.textContent = figure.querySelector("figcaption")?.textContent || "";
+            box.classList.add("open");
+            box.querySelector(".pf-lightbox-inner").scrollTop = 0;
+        }),
+    );
+    box.addEventListener("click", (e) => {
+        if (e.target === box || e.target.closest(".pf-lightbox-close")) close();
+    });
+    document.addEventListener("keydown", (e) => e.key === "Escape" && close());
 }
 
 async function loadProjectPage() {
@@ -316,6 +409,8 @@ async function loadProjectPage() {
             img.loading = "lazy";
             img.decoding = "async";
         });
+        container.querySelectorAll(".pf-carousel").forEach(initCarousel);
+        initLightbox(container);
     } catch (error) {
         console.error(`Could not load project "${name}".`, error);
         container.innerHTML = `<section><h1>Project not found</h1>

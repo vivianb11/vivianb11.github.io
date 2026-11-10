@@ -695,6 +695,44 @@
     border: 0;
     padding: 0;
 }
+/* video + stat column (<div class="pf-showcase"> in a markdown page) */
+.pf .pf-showcase {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+.pf .pf-showcase > * {
+    grid-area: auto;
+}
+.pf .pf-showcase > .pf-video {
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+}
+.pf .pf-stats > .pf-stat {
+    background: var(--pf-card);
+    border: 1px solid var(--pf-line);
+    border-radius: var(--pf-radius);
+}
+.pf .pf-team-line {
+    text-align: center;
+}
+@media only screen and (max-width: 900px) {
+    .pf .pf-showcase {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* engine logos (site .icon-logo masks) tinted with the page accent */
+.pf .pf-chips .icon-logo {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    vertical-align: -1px;
+    background-color: var(--pf-accent);
+}
+
 /* "::: columns" -> side-by-side tiles */
 .pf .pf-cols {
     display: grid;

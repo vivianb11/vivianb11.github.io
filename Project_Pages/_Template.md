@@ -22,6 +22,10 @@ accent-ink: #1d1500
   accent / accent-ink : couleur du theme de la page (accent-ink = texte
   pose sur la couleur, sombre si l'accent est clair). Sans accent :
   couleur du site.
+  kicker / tagline (optionnels) : petite ligne au-dessus du titre et
+  phrase d'accroche a cote. css: MonProjet.css -> feuille de style en plus
+  (dans Project_Pages/) pour une mise en page propre au projet.
+  Page riche (galerie, diaporama, visionneuse) : voir GameEconomySimulator.md.
 
   SYNTAXE
   # Titre             -> nouvelle section (grand cadre)
