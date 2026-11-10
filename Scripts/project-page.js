@@ -192,9 +192,10 @@ function buildColumns(lines) {
     const cells = [[]];
     let depth = 0;
     lines.forEach((line) => {
-        if (/^:::\s*\w+/.test(line)) depth++;
-        else if (/^:::\s*$/.test(line)) depth--;
-        if (depth === 0 && /^\+\+\+\s*$/.test(line)) cells.push([]);
+        // \s* au debut : un formateur Markdown peut indenter ces marqueurs
+        if (/^\s*:::\s*\w+/.test(line)) depth++;
+        else if (/^\s*:::\s*$/.test(line)) depth--;
+        if (depth === 0 && /^\s*\+\+\+\s*$/.test(line)) cells.push([]);
         else cells[cells.length - 1].push(line);
     });
     const html = cells.map(
@@ -226,8 +227,8 @@ function buildSectionBody(lines) {
             return;
         }
 
-        const open = line.match(/^:::\s*(\w+)\s*$/);
-        const close = /^:::\s*$/.test(line);
+        const open = line.match(/^\s*:::\s*(\w+)\s*$/);
+        const close = /^\s*:::\s*$/.test(line);
 
         if (!block && open) {
             flush();
