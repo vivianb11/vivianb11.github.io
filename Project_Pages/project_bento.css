@@ -845,10 +845,6 @@
 
 /* ---------- mobile: one column ---------- */
 @media only screen and (max-width: 900px) {
-    .pf > section {
-        margin: 20px;
-        padding: 5%;
-    }
     .pf .pf-intro {
         display: grid;
         grid-template-columns: 1fr;
