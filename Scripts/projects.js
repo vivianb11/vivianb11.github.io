@@ -8,6 +8,7 @@
 //   title       Titre affiche
 //   visible     true = affiche, false = cache
 //   tags        Pastilles de la carte + filtre ?q= (annee, moteur, plateforme)
+//               "Web · PC · Mobile" = une pastille, trois tags pour le filtre
 //   hiddenTags  (optionnel) Tags pour le filtre ?q= uniquement, non affiches
 //               ex: index.html?q=2024  index.html?q=unity,vr  (majuscules ignorees)
 //   image       Chemin de l'image (ou poster de la video)
@@ -26,7 +27,7 @@ const PROJECTS = [
     {
         title: "Shards",
         visible: true,
-        tags: ["2024", "Unreal", "PC"],
+        tags: ["2026", "Unreal", "PC"],
         image: "Assets/Img/Shards/ShardsPoster.png",
         alt: "Shards game poster",
         description: `Shards is a single-player twin-stick shooter adventure
@@ -38,13 +39,12 @@ const PROJECTS = [
     },
     {
         title: "Game Economy Simulator",
-        visible: false,
-        tags: ["2025", "Godot", "Mobile"],
+        visible: true,
+        tags: ["2025", "Godot", "Web · PC · Mobile"],
         hiddenTags: ["Tech"],
-        image: "Assets/Img/GameEconomySimulator/editor_overview.png",
-        video: "Assets/Video/GameEconomySimulator_Trailer_Small.mp4",
-        alt: "Game Economy Simulator editor",
-        description: `A mobile game and its economy tools, built in Godot 4
+        image: "Assets/Img/GameEconomySimulator/card.jpg",
+        alt: "Game Economy Simulator hero cards",
+        description: `A web, PC and mobile game and its economy tools, built in Godot 4
             by a team of 3 in 4.5 months.`,
         page: "project.html?p=GameEconomySimulator",
     },
@@ -144,9 +144,10 @@ const PROJECTS = [
 //#region Project Grid Builder
 function buildProjectItem(project, index) {
     const item = document.createElement("article");
-    item.dataset.tags = [...project.tags, ...(project.hiddenTags || [])].join(
-        ",",
-    );
+    // "Web · PC · Mobile" compte comme trois tags pour le filtre ?q=
+    item.dataset.tags = [...project.tags, ...(project.hiddenTags || [])]
+        .flatMap((tag) => tag.split("·").map((part) => part.trim()))
+        .join(",");
 
     // Clic sur la carte : page du projet en priorite, sinon le jeu
     const mainHref = project.page || project.play;

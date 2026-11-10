@@ -1,0 +1,26 @@
+/* Game Economy Simulator: project overrides on top of project_bento.css */
+
+.pf {
+    --pf-accent: #ffc400;
+    --pf-accent-ink: #1d1500;
+    --pf-evo-w: 1968;
+    --pf-evo-h: 1268;
+}
+
+/* editor mosaic: areas and ratios match this project's captures */
+.pf .pf-editor-grid {
+    grid-template-areas:
+        "settings settings settings hero"
+        "offer script script icons"
+        "scene scene scene scene";
+}
+.pf .ed-settings { grid-area: settings; aspect-ratio: 16 / 9; }
+.pf .ed-hero { grid-area: hero; }
+.pf .ed-offer { grid-area: offer; }
+.pf .ed-script { grid-area: script; aspect-ratio: 848 / 500; }
+.pf .ed-icons { grid-area: icons; }
+.pf .ed-scene { grid-area: scene; aspect-ratio: 1392 / 600; }
+
+@media only screen and (max-width: 900px) {
+    .pf .pf-editor-grid { grid-template-areas: none; }
+}
